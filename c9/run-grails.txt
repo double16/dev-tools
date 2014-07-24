@@ -1,0 +1,5 @@
+Name: run-app
+Command: ./grailsw run-app -Dgrails.server.port=${PORT} -Dgrails.server.host=${IP}
+Env:
+JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
+
