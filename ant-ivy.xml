@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Downloads the Ivy JAR for Ant use. -->
-<project name="ivyroundup" default="all" xmlns:ivy="urn:org.apache.ivy.ant">
+<project name="ant-ivy" default="bootstrap" xmlns:ivy="urn:org.apache.ivy.ant">
 <target name="bootstrap" description="Install ivy">
     <mkdir dir="${user.home}/.ant/lib"/>
     <get src="https://repository.sonatype.org/service/local/artifact/maven/redirect?r=central-proxy&amp;g=org.apache.ivy&amp;a=ivy&amp;v=LATEST&amp;e=jar"
