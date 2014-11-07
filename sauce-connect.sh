@@ -12,9 +12,26 @@ fi
 
 mkdir -p ${HOME}/.sc-download || exit $?
 cd ${HOME}/.sc-download || exit $?
-[ -f "sc-4.3-linux.tar.gz" ] || wget -nd https://saucelabs.com/downloads/sc-4.3-linux.tar.gz || exit $?
-tar xzvfp sc-4.3-linux.tar.gz || exit $?
-./sc-4.3-linux/bin/sc -u "${SAUCE_LABS_USER}" -k "${SAUCE_LABS_ACCESS_PASSWORD}" -f ${HOME}/.sc-ready &
+case $(uname -s) in
+Linux)
+  SCDIR="sc-4.3-linux"
+  SCPKG="sc-4.3-linux.tar.gz"
+  ;;
+Darwin)
+  SCDIR="sc-4.3-osx"
+  SCPKG="sc-4.3-osx.zip"
+  ;;
+esac
+[ -f "${SCPKG}" ] || wget -nd https://saucelabs.com/downloads/${SCPKG} || exit $?
+case "${SCPKG}" in
+*.tar.gz)
+  tar xzvfp "${SCPKG}" || exit $?
+  ;;
+*.zip)
+  unzip "${SCPKG}" || exit $?
+  ;;
+esac
+"./${SCDIR}/bin/sc" -u "${SAUCE_LABS_USER}" -k "${SAUCE_LABS_ACCESS_PASSWORD}" -f ${HOME}/.sc-ready &
 C=0
 while [ ! -f ${HOME}/.sc-ready -a $C -lt 30 ]; do sleep 5s; C=$(($C+1)); done
 
